@@ -1,0 +1,19 @@
+body {
+  font-family: Arial;
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input, select, button {
+  margin: 10px 0;
+  padding: 10px;
+}
