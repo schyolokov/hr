@@ -41,9 +41,16 @@ async function generate() {
       }]
     });
 
-    const blob = await Packer.toBlob(doc);
+  Packer.toBlob(doc).then(blob => {
+  const url = URL.createObjectURL(blob);
 
-    saveAs(blob, "prikaz.docx");
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "prikaz.docx";
+  a.click();
+
+  URL.revokeObjectURL(url);
+});
 
   } catch (err) {
     console.error(err);
