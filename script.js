@@ -1,47 +1,31 @@
-document.getElementById("orderForm").addEventListener("submit", async function(e) {
-  e.preventDefault();
+async function generate() {
 
   const { Document, Packer, Paragraph, TextRun } = window.docx;
 
-  const type = document.getElementById("orderType").value;
-  const fio = document.getElementById("fio").value;
-  const position = document.getElementById("position").value;
-  const date = document.getElementById("date").value;
+  const type = document.getElementById("type").value;
 
-  let textRU = "";
-  let textKZ = "";
+  const data = {
+    fio: document.getElementById("fio").value,
+    position: document.getElementById("position").value,
+    date: formatDate(document.getElementById("date").value)
+  };
 
-  if (type === "hire") {
-    textRU = `Принять ${fio} на должность ${position} с ${date}`;
-    textKZ = `${fio} ${date} бастап ${position} лауазымына қабылдансын`;
-  }
+  let template;
 
-  if (type === "fire") {
-    textRU = `Уволить ${fio} с должности ${position} ${date}`;
-    textKZ = `${fio} ${date} күні ${position} қызметінен босатылсын`;
-  }
-
-  if (type === "vacation") {
-    textRU = `Предоставить отпуск ${fio} с ${date}`;
-    textKZ = `${fio} үшін ${date} бастап демалыс берілсін`;
-  }
+  if (type === "hire") template = hireTemplate(data);
+  if (type === "fire") template = fireTemplate(data);
+  if (type === "vacation") template = vacationTemplate(data);
 
   const doc = new Document({
     sections: [{
       children: [
-        new Paragraph({
-          children: [new TextRun({ text: "ПРИКАЗ", bold: true })]
-        }),
-        new Paragraph(textRU),
-        new Paragraph(""),
-        new Paragraph({
-          children: [new TextRun({ text: "БҰЙРЫҚ", bold: true })]
-        }),
-        new Paragraph(textKZ)
+        new Paragraph({ text: template.ru }),
+        new Paragraph(" "),
+        new Paragraph({ text: template.kz })
       ]
     }]
   });
 
   const blob = await Packer.toBlob(doc);
-  saveAs(blob, "order.docx");
-});
+  saveAs(blob, "prikaz.docx");
+}
