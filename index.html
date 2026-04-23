@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Генератор приказов HR</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Генератор приказов отдела кадров</h1>
+
+<form id="orderForm">
+  <label>Тип приказа:</label>
+  <select id="orderType">
+    <option value="hire">Прием на работу</option>
+    <option value="fire">Увольнение</option>
+    <option value="vacation">Отпуск</option>
+  </select>
+
+  <label>ФИО:</label>
+  <input type="text" id="fio" required>
+
+  <label>Должность:</label>
+  <input type="text" id="position">
+
+  <label>Дата:</label>
+  <input type="date" id="date">
+
+  <button type="submit">Сгенерировать DOCX</button>
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.0.3/docx.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
