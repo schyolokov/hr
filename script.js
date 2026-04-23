@@ -6,7 +6,7 @@ async function generate() {
       return;
     }
 
-    const { Document, Packer, Paragraph, TextRun } = window.docx;
+    const { Document, Packer, Paragraph, TextRun } = docx;
 
     const type = document.getElementById("type").value;
 
