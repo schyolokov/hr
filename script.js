@@ -1,31 +1,52 @@
 async function generate() {
+  try {
 
-  const { Document, Packer, Paragraph, TextRun } = window.docx;
+    if (!window.docx) {
+      alert("docx библиотека не загружена");
+      return;
+    }
 
-  const type = document.getElementById("type").value;
+    const { Document, Packer, Paragraph, TextRun } = window.docx;
 
-  const data = {
-    fio: document.getElementById("fio").value,
-    position: document.getElementById("position").value,
-    date: formatDate(document.getElementById("date").value)
-  };
+    const type = document.getElementById("type").value;
 
-  let template;
+    const data = {
+      fio: document.getElementById("fio").value,
+      position: document.getElementById("position").value,
+      date: formatDate(document.getElementById("date").value)
+    };
 
-  if (type === "hire") template = hireTemplate(data);
-  if (type === "fire") template = fireTemplate(data);
-  if (type === "vacation") template = vacationTemplate(data);
+    let template;
 
-  const doc = new Document({
-    sections: [{
-      children: [
-        new Paragraph({ text: template.ru }),
-        new Paragraph(" "),
-        new Paragraph({ text: template.kz })
-      ]
-    }]
-  });
+    if (type === "hire") template = hireTemplate(data);
+    if (type === "fire") template = fireTemplate(data);
+    if (type === "vacation") template = vacationTemplate(data);
 
-  const blob = await Packer.toBlob(doc);
-  saveAs(blob, "prikaz.docx");
+    // 🔥 ВАЖНО: разбиваем текст на строки
+    function textToParagraphs(text) {
+      return text.split("\n").map(line =>
+        new Paragraph({
+          children: [new TextRun(line)]
+        })
+      );
+    }
+
+    const doc = new Document({
+      sections: [{
+        children: [
+          ...textToParagraphs(template.ru),
+          new Paragraph(""),
+          ...textToParagraphs(template.kz)
+        ]
+      }]
+    });
+
+    const blob = await Packer.toBlob(doc);
+
+    saveAs(blob, "prikaz.docx");
+
+  } catch (err) {
+    console.error(err);
+    alert("Ошибка генерации DOCX: " + err.message);
+  }
 }
