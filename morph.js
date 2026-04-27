@@ -1,5 +1,9 @@
 // --- РУССКОЕ СКЛОНЕНИЕ ФИО ---
 
+if (typeof petrovich === "undefined") {
+  console.warn("petrovich не подключен");
+}
+
 function declineFIO(fio, gramCase = "dative") {
   try {
     const parts = fio.split(" ");
