@@ -2,47 +2,32 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>HR Генератор приказов</title>
+  <title>Генератор кадровых приказов</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <div class="container">
-  <h1>📄 Генератор приказов</h1>
+  <h1>Генератор приказов</h1>
 
-  <div class="card">
-    <label>Тип приказа</label>
-    <select id="type">
-      <option value="hire">Прием</option>
-      <option value="fire">Увольнение</option>
-      <option value="vacation">Отпуск</option>
-    </select>
+  <label>Тип приказа:</label>
+  <select id="orderType">
+    <option value="">-- Выберите --</option>
+    <option value="hire">Прием на работу</option>
+    <option value="fire">Увольнение</option>
+    <option value="vacation">Отпуск</option>
+  </select>
 
-    <label>ФИО</label>
-    <input id="fio" placeholder="Иванов Иван Иванович">
+  <div id="form"></div>
 
-    <label>Должность</label>
-    <input id="position">
-
-    <label>Дата</label>
-    <input type="date" id="date">
-
-    <button onclick="generate()">Сформировать DOCX</button>
-  </div>
+  <button id="generateBtn">Скачать DOCX</button>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.0.3/docx.js"></script>
+<script src="https://unpkg.com/docx@8.5.0/build/index.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
-<script src="utils/fio.js"></script>
-<script src="utils/i18n.js"></script>
-
-<script src="templates/hire.js"></script>
-<script src="templates/fire.js"></script>
-<script src="templates/vacation.js"></script>
-
-<script src="script.js"></script>
+<script src="templates.js"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
