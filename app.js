@@ -10,7 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderForm(type) {
     form.innerHTML = "";
 
-    if (!templates[type]) return;
+    if (!templates[type]) {
+  alert("Ошибка шаблона");
+  return;
+}
 
     templates[type].fields.forEach(f => {
       const input = document.createElement("input");
