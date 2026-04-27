@@ -1,24 +1,28 @@
-const formEl = document.getElementById("form");
-const select = document.getElementById("orderType");
+document.addEventListener("DOMContentLoaded", () => {
+  const formEl = document.getElementById("form");
+  const select = document.getElementById("orderType");
 
-select.addEventListener("change", () => {
-  renderForm(select.value);
-});
-
-function renderForm(type) {
-  formEl.innerHTML = "";
-  if (!templates[type]) return;
-
-  templates[type].fields.forEach(f => {
-    const input = document.createElement("input");
-    input.placeholder = f.label;
-    input.id = f.id;
-    input.type = f.type || "text";
-    formEl.appendChild(input);
+  select.addEventListener("change", () => {
+    renderForm(select.value);
   });
-}
 
-document.getElementById("generateBtn").addEventListener("click", generateDoc);
+  function renderForm(type) {
+    formEl.innerHTML = "";
+
+    if (!templates[type]) return;
+
+    templates[type].fields.forEach(f => {
+      const input = document.createElement("input");
+      input.placeholder = f.label;
+      input.id = f.id;
+      input.type = f.type || "text";
+      formEl.appendChild(input);
+    });
+  }
+
+  document.getElementById("generateBtn")
+    .addEventListener("click", generateDoc);
+});
 
 async function generateDoc() {
   const { Document, Packer, Paragraph, TextRun } = docx;
