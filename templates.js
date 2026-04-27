@@ -1,25 +1,30 @@
 build: (data) => {
 
-  const fioDative = typeof declineFIO === "function"
-    ? declineFIO(data.fio, "dative")
-    : data.fio;
+  const fio = data.fio || "";
+  const position = data.position || "";
+  const startDate = data.startDate || "";
+  const number = data.number || "-";
 
-  const fioKz = typeof kzDative === "function"
-    ? kzDative(data.fio)
-    : data.fio;
+  const fioDative = (typeof declineFIO === "function" && fio)
+    ? declineFIO(fio, "dative")
+    : fio;
+
+  const fioKz = (typeof kzDative === "function" && fio)
+    ? kzDative(fio)
+    : fio;
 
   return {
 
     ru: [
       "ТОО \"Компания\"",
-      `ПРИКАЗ № ${data.number}`,
+      `ПРИКАЗ № ${number}`,
       "г. Петропавловск",
       "",
       "О приеме на работу",
       "",
-      `ПРИНЯТЬ: ${data.fio}`,
-      `Назначить ${fioDative} на должность ${data.position}`,
-      `с ${data.startDate}`,
+      `ПРИНЯТЬ: ${fio}`,
+      `Назначить ${fioDative} на должность ${position}`,
+      startDate ? `с ${startDate}` : "",
       "",
       "Основание: трудовой договор",
       "",
@@ -28,13 +33,13 @@ build: (data) => {
 
     kz: [
       "\"Компания\" ЖШС",
-      `№ ${data.number} БҰЙРЫҚ`,
+      `№ ${number} БҰЙРЫҚ`,
       "Петропавл қ.",
       "",
       "Жұмысқа қабылдау туралы",
       "",
-      `${data.fio} ${data.position} лауазымына`,
-      `${data.startDate} бастап қабылдансын`,
+      `${fio} ${position} лауазымына`,
+      startDate ? `${startDate} бастап қабылдансын` : "",
       "",
       `${fioKz} қызметке қабылдансын`,
       "",
