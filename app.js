@@ -1,15 +1,25 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
+
   const formEl = document.getElementById("form");
   const select = document.getElementById("orderType");
 
-  select.addEventListener("change", () => {
-    renderForm(select.value);
-  });
+  if (!formEl || !select) {
+    console.error("Не найден form или select");
+    return;
+  }
 
-  function renderForm(type) {
+  console.log("JS загружен");
+
+  select.addEventListener("change", function () {
+    const type = this.value;
+    console.log("Выбран тип:", type);
+
     formEl.innerHTML = "";
 
-    if (!templates[type]) return;
+    if (!type || !templates[type]) {
+      console.warn("Нет шаблона для:", type);
+      return;
+    }
 
     templates[type].fields.forEach(f => {
       const input = document.createElement("input");
@@ -18,47 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
       input.type = f.type || "text";
       formEl.appendChild(input);
     });
-  }
+  });
 
   document.getElementById("generateBtn")
     .addEventListener("click", generateDoc);
+
 });
-
-async function generateDoc() {
-  const { Document, Packer, Paragraph, TextRun } = docx;
-
-  const type = select.value;
-  if (!type) return alert("Выберите тип приказа");
-
-  let data = {};
-  templates[type].fields.forEach(f => {
-    data[f.id] = document.getElementById(f.id).value;
-  });
-
-  const text = templates[type].generate(data);
-
-  const doc = new Document({
-    sections: [{
-      children: [
-
-        new Paragraph({
-          children: [
-            new TextRun({ text: text.ru, font: "Times New Roman", size: 24 })
-          ]
-        }),
-
-        new Paragraph({ text: "" }),
-
-        new Paragraph({
-          children: [
-            new TextRun({ text: text.kz, font: "Times New Roman", size: 24 })
-          ]
-        })
-
-      ]
-    }]
-  });
-
-  const blob = await Packer.toBlob(doc);
-  saveAs(blob, "order.docx");
-}
