@@ -1,3 +1,11 @@
+if (typeof kzDative === "undefined") {
+  console.error("morph.js не подключен");
+}
+
+if (typeof declineFIO === "undefined") {
+  console.error("petrovich не подключен");
+}
+
 const templates = {
 
   hire: {
