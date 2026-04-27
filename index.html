@@ -2,30 +2,48 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Генератор кадровых приказов</title>
-  <link rel="stylesheet" href="style.css">
+  <title>HR Приказы</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
-<div class="container">
-  <h1>Генератор приказов</h1>
+<div class="container mt-5">
+  <h3>Генератор кадровых приказов</h3>
 
-  <label>Тип приказа:</label>
-  <select id="orderType">
-    <option value="">-- Выберите --</option>
-    <option value="hire">Прием на работу</option>
-    <option value="fire">Увольнение</option>
-    <option value="vacation">Отпуск</option>
-  </select>
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <label>Тип приказа</label>
+      <select id="orderType" class="form-select">
+        <option value="">Выберите</option>
+        <option value="hire">Прием</option>
+        <option value="fire">Увольнение</option>
+        <option value="vacation">Отпуск</option>
+      </select>
+    </div>
 
-  <div id="form"></div>
+    <div class="col-md-3">
+      <label>№ приказа</label>
+      <input id="orderNumber" class="form-control">
+    </div>
 
-  <button id="generateBtn">Скачать DOCX</button>
+    <div class="col-md-3">
+      <label>Дата приказа</label>
+      <input type="date" id="orderDate" class="form-control">
+    </div>
+  </div>
+
+  <div id="dynamicForm" class="mt-4"></div>
+
+  <button class="btn btn-primary mt-4" id="generateBtn">
+    Скачать приказ
+  </button>
 </div>
 
 <script src="https://unpkg.com/docx@8.5.0/build/index.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
+<script src="storage.js"></script>
 <script src="templates.js"></script>
 <script src="app.js"></script>
 
