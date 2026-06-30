@@ -1,3 +1,17 @@
 body {
-  background: #f8f9fa;
+  background: #f3f6f9;
+}
+
+.card {
+  border: 0;
+}
+
+.form-label {
+  font-weight: 500;
+}
+
+#dynamicForm:empty::before {
+  content: "Выберите тип приказа, чтобы заполнить поля формы.";
+  color: #6c757d;
+  display: block;
 }
