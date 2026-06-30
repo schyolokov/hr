@@ -166,13 +166,18 @@ async function generate() {
     return;
   }
 
+  if (typeof docx === "undefined") {
+    alert("Библиотека docx не загружена");
+    return;
+  }
+
   const data = collectFormData(type);
   if (!validateData(type, data)) {
     return;
   }
 
   const content = templates[type].build(data);
-  const { Document, Packer, Paragraph, TextRun, PageBreak, AlignmentType } = docx;
+  const { Document, Packer, Paragraph, TextRun, AlignmentType } = docx;
 
   const doc = new Document({
     sections: [{
@@ -188,7 +193,9 @@ async function generate() {
       },
       children: [
         ...makeParagraphs(content.ru, Paragraph, TextRun, AlignmentType),
-        new Paragraph({ children: [new PageBreak()] }),
+        new Paragraph({
+          children: [new TextRun({ break: 1 })]
+        }),
         ...makeParagraphs(content.kz, Paragraph, TextRun, AlignmentType)
       ]
     }]
